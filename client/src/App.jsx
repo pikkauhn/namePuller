@@ -28,9 +28,8 @@ function App() {
           setData(result);
         }
         // Update the message once the server is up
-        if (data.length !== 0){
         showMessage('success','Server is Up', 'Data loaded successfully.');
-        }
+        
       })
       } catch (error) {
         console.log(error);
