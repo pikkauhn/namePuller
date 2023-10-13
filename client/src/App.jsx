@@ -76,7 +76,12 @@ function App() {
     const index = data.findIndex((obj) => obj.name.toUpperCase() === nameEntered.toUpperCase())
     if (data[index].drawn === true) {
       return false
-    } else {
+    }
+    if (nameEntered.toUpperCase() === 'getData') {
+      console.log(data);
+      return false
+    }
+    else {
       return true
     }
   }
