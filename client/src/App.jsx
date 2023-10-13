@@ -22,14 +22,13 @@ function App() {
       try {
         // Notify the user that the server is spinning up
         showMessage('warn', 'Server Spinning Up', 'Please wait...');
-        Axios.post(server+'/getData', { fileName }).then((response) => {
+        await Axios.post(server+'/getData', { fileName }).then((response) => {
         const result = response.data;
         if (result.length !== 0) {
           setData(result);
-        }
-        // Update the message once the server is up
+          // Update the message once the server is up
         showMessage('success','Server is Up', 'Data loaded successfully.');
-        
+        }                
       })
       } catch (error) {
         console.log(error);
