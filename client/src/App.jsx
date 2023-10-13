@@ -21,7 +21,7 @@ function App() {
       try {
         // Notify the user that the server is spinning up
         showMessage("warn", 'Server Spinning Up', 'Please wait...');
-        const response = await Axios.post('http://localhost:3001/getData', { fileName });
+        const response = await Axios.post('namepullerservice.onrender.com/getData', { fileName });
         const result = response.data;
         if (result.length !== 0) {
           setData(result);
@@ -42,7 +42,7 @@ function App() {
     if (writtenData.length) {
 
       try {
-        await Axios.post("http://localhost:3001/writeData", { fileName, writtenData })
+        await Axios.post("http://namepullerservice.onrender.com/writeData", { fileName, writtenData })
       } catch (error) {
         console.log(error);
       };
