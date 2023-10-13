@@ -14,7 +14,7 @@ app.use(express.static('public'));
 app.use(cors());
 
 app.post("/getData", async (req, res) => {
-    const path = './data/JSON/' + req.body.fileName;
+    const path = './data/JSON/Names.json';
     const buff = await readFile(path);
     let content = buff.toString();
     const obj = JSON.parse(content);
