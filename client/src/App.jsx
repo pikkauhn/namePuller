@@ -28,7 +28,9 @@ function App() {
           setData(result);
         }
         // Update the message once the server is up
+        if (data.length !== 0){
         showMessage('success','Server is Up', 'Data loaded successfully.');
+        }
       })
       } catch (error) {
         console.log(error);
@@ -100,7 +102,7 @@ const drawName = () => {
 
 const handleButtonClick = async () => {
   if (nameEntered.length === 0) {
-    showMessage('Sorry', "I can't let you through")
+    showMessage('error','Sorry', "I can't let you through")
   } else {
     if (checkNames()) {
       if (checkDrawn()) {
@@ -118,7 +120,7 @@ const handleButtonClick = async () => {
         sendData(writtenData)
 
       } else {
-        showMessage(`I'm sorry, ${nameEntered}`, "I can't let you do that.")
+        showMessage('error',`I'm sorry, ${nameEntered}`, "I can't let you do that.")
       }
     };
   }
