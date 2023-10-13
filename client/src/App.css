@@ -1,0 +1,72 @@
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .buttonContainer {
+    text-align: center;
+  }
+  
+  .drawButton {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* Define a CSS animation for the button */
+  @keyframes buttonDisappear {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      display: none;
+    }
+  }
+  
+  /* Apply the animation when the button is clicked */
+  .drawButton.clicked {
+    animation: buttonDisappear .5s forwards;
+  }
+  
+  .fade-box {
+    position: relative;
+    text-align: center;
+  }
+  
+  .hidden {
+    opacity: 0;
+    transform: scale(0.1);
+    transition: opacity 1s, transform 3s;
+  }
+  
+  .visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .pulled-name {
+    animation: scaleUp 1s ease;
+    transform: scale(10);
+  }
+
+  @keyframes scaleUp {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 100;
+        transform: scale(10);
+    }    
+  }
+
+.p-inputtext {
+    text-align: center;
+}
