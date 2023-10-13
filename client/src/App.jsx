@@ -12,31 +12,37 @@ function App() {
   const [buttonClicked, setButtonClicked] = useState(false);
   const [nameEntered, setNameEntered] = useState('');
   const [pulledName, setPulledName] = useState('');
-  const [data, setData] = useState([]);  
+  const [data, setData] = useState([]);
   const toastTopCenter = useRef(null);
   const fileName = "Names.json";
 
   useEffect(() => {
     const loadData = async () => {
-      Axios.post("http://localhost:3001/getData", { fileName }).then((response) => {
+      try {
+        // Notify the user that the server is spinning up
+        showMessage('Server Spinning Up', 'Please wait...');
+        const response = await Axios.post('http://localhost:3001/getData', { fileName });
         const result = response.data;
         if (result.length !== 0) {
           setData(result);
         }
-      })
-    }
-    try {
-      loadData();
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
+        // Update server status once it's up
+        showMessage('Server is Up', 'Data loaded successfully.');
+      } catch (error) {
+        console.log(error);
+        // Notify the user about the server error
+        showMessage('Server Error', 'An error occurred.')
+      }
+    };
+
+    loadData();
+  }, []);
 
   const sendData = async (writtenData) => {
     if (writtenData.length) {
-      
+
       try {
-        await Axios.post("http://localhost:3001/writeData", { fileName, writtenData })       
+        await Axios.post("http://localhost:3001/writeData", { fileName, writtenData })
       } catch (error) {
         console.log(error);
       };
@@ -106,7 +112,7 @@ function App() {
 
           const writtenData = arr
           setPulledName(randomName.name)
-          setTimeout(() => {setIsPulledNameVisible(true);}, 2000)
+          setTimeout(() => { setIsPulledNameVisible(true); }, 2000)
           sendData(writtenData)
 
         } else {
