@@ -3,6 +3,8 @@ const cors = require('cors');
 const fs = require('fs');
 const util = require('util');
 
+const PORT = process.env.PORT || 3030;
+
 const app = express();
 const writeFile = util.promisify(fs.writeFile);
 const readFile = util.promisify(fs.readFile);
@@ -27,5 +29,6 @@ app.post("/writeData", async (req, res) => {
     res.send(data);
 })
 
-app.listen(process.env.PORT || 3001)
-console.log("listening on 3001")
+app.listen(PORT, () => {
+    console.log(`server started on port ${PORT}`)
+})
