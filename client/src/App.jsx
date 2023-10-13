@@ -20,18 +20,18 @@ function App() {
     const loadData = async () => {
       try {
         // Notify the user that the server is spinning up
-        showMessage('Server Spinning Up', 'Please wait...');
+        showMessage("warn", 'Server Spinning Up', 'Please wait...');
         const response = await Axios.post('http://localhost:3001/getData', { fileName });
         const result = response.data;
         if (result.length !== 0) {
           setData(result);
         }
         // Update server status once it's up
-        showMessage('Server is Up', 'Data loaded successfully.');
+        showMessage("succes", 'Server is Up', 'Data loaded successfully.');
       } catch (error) {
         console.log(error);
         // Notify the user about the server error
-        showMessage('Server Error', 'An error occurred.')
+        showMessage("error", 'Server Error', 'An error occurred.')
       }
     };
 
@@ -49,9 +49,9 @@ function App() {
     };
   };
 
-  const showMessage = (summary, detail) => {
+  const showMessage = (severity, summary, detail) => {
     toastTopCenter.current.show([
-      { severity: 'error', summary: summary, detail: detail, life: 3000 }
+      { severity: severity, summary: summary, detail: detail, life: 3000 }
     ])
   }
 
@@ -65,7 +65,7 @@ function App() {
       return true;
     } else {
       setButtonClicked(false)
-      showMessage("you're not on the list", "Hey, a lotta people's girlfriends are in there")
+      showMessage("error", "you're not on the list", "Hey, a lotta people's girlfriends are in there")
       return false;
     }
   }
@@ -98,7 +98,7 @@ function App() {
 
   const handleButtonClick = async () => {
     if (nameEntered.length === 0) {
-      showMessage('Sorry', "I can't let you through")
+      showMessage("error", 'Sorry', "I can't let you through")
     } else {
       if (checkNames()) {
         if (checkDrawn()) {
@@ -116,7 +116,7 @@ function App() {
           sendData(writtenData)
 
         } else {
-          showMessage(`I'm sorry, ${nameEntered}`, "I can't let you do that.")
+          showMessage("error", `I'm sorry, ${nameEntered}`, "I can't let you do that.")
         }
       };
     }
