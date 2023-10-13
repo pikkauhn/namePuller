@@ -29,9 +29,7 @@ function App() {
           }
         })
         // Update the message once the server is up
-        if (data[0].name === 'Donna') {
           showMessage('success', 'Server is Up', 'Data loaded successfully.');
-        }
       } catch (error) {
         console.log(error);
         // Notify the user about the server error
