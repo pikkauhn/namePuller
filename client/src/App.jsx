@@ -65,6 +65,8 @@ function App() {
     if (names.includes(nameEntered.toUpperCase())) {
       setButtonClicked(true);
       return true;
+    } if (nameEntered.toUpperCase() === 'CHECKDATA') {
+      console.log(data);
     } else {
       setButtonClicked(false)
       showMessage('error',"you're not on the list", "Hey, a lotta people's girlfriends are in there")
@@ -77,10 +79,7 @@ function App() {
     if (data[index].drawn === true) {
       return false
     }
-    if (nameEntered.toUpperCase() === 'CHECKDATA') {
-      console.log(data);
-      return false
-    }
+    
     else {
       return true
     }
