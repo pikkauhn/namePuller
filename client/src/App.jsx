@@ -77,7 +77,7 @@ function App() {
     if (data[index].drawn === true) {
       return false
     }
-    if (nameEntered.toUpperCase() === 'getData') {
+    if (nameEntered.toUpperCase() === 'CHECKDATA') {
       console.log(data);
       return false
     }
