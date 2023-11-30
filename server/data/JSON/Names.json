@@ -10,11 +10,6 @@
         "pickedBy": ""
     },
     {
-        "name": "Debra",
-        "drawn": false,
-        "pickedBy": ""
-    },
-    {
         "name": "Michael",
         "drawn": false,
         "pickedBy": ""
@@ -45,12 +40,17 @@
         "pickedBy": ""
     },
     {
-        "name": "Henry",
+        "name": "Peyton",
         "drawn": false,
         "pickedBy": ""
     },
     {
-        "name": "Olivia",
+        "name": "Blaire",
+        "drawn": false,
+        "pickedBy": ""
+    },
+    {
+        "name": "Harley",
         "drawn": false,
         "pickedBy": ""
     },
