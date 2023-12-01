@@ -160,7 +160,7 @@ function App() {
       <Toast ref={toastTopCenter} position="top-center" />
       <div className="p-inputgroup">
         <InputText
-          placeholder="Enter Name"
+          placeholder="Enter First Name"
           onChange={(e) => setNameEntered(e.target.value)}
         />
       </div>
