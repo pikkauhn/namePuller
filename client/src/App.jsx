@@ -3,9 +3,12 @@ import { useEffect, useState, useRef } from 'react';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
+import { createClient } from '@supabase/supabase-js'
 import Axios from 'axios'
 
 import './App.css'
+
+const supabase = createClient(process.env.REACT_APP_DB_CONX)
 
 function App() {
   const [isPulledNameVisible, setIsPulledNameVisible] = useState(false);
@@ -22,14 +25,13 @@ function App() {
       try {
         // Notify the user that the server is spinning up
         showMessage('warn', 'Server Spinning Up', 'Please wait...');
-        await Axios.post(server + '/getData', { fileName }).then((response) => {
-          const result = response.data;
-          if (result.length !== 0) {
-            setData(result);
-          }
-        })
+        const { result } = await supabase.from("Names").select();
+        if (result.length !== 0) {
+          setData(result);
+        }
+
         // Update the message once the server is up
-          showMessage('success', 'Server is Up', 'Data loaded successfully.');
+        showMessage('success', 'Server is Up', 'Data loaded successfully.');
       } catch (error) {
         console.log(error);
         // Notify the user about the server error
@@ -42,7 +44,6 @@ function App() {
 
   const sendData = async (writtenData) => {
     if (writtenData.length) {
-
       try {
         await Axios.post(server + "/writeData", { fileName, writtenData })
       } catch (error) {
@@ -69,7 +70,7 @@ function App() {
       console.log(data);
     } else {
       setButtonClicked(false)
-      showMessage('error',"you're not on the list", "Hey, a lotta people's girlfriends are in there")
+      showMessage('error', "you're not on the list", "Hey, a lotta people's girlfriends are in there")
       return false;
     }
   }
@@ -79,7 +80,7 @@ function App() {
     if (data[index].drawn === true) {
       return false
     }
-    
+
     else {
       return true
     }
