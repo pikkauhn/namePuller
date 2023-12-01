@@ -4,11 +4,12 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
 import { createClient } from '@supabase/supabase-js'
-import Axios from 'axios'
 
 import './App.css'
 
-const supabase = createClient(process.env.REACT_APP_DB_CONX)
+const url = process.env.REACT_APP_DB_CONX;
+const key = process.env.REACT_APP_KEY;
+const supabase = createClient(url, key)
 
 function App() {
   const [isPulledNameVisible, setIsPulledNameVisible] = useState(false);
@@ -16,20 +17,25 @@ function App() {
   const [nameEntered, setNameEntered] = useState('');
   const [pulledName, setPulledName] = useState('');
   const [data, setData] = useState([]);
-  const server = 'https://namepullerservice.onrender.com'
   const toastTopCenter = useRef(null);
-  const fileName = "Names.json";
 
   useEffect(() => {
+    let ignore = false
     const loadData = async () => {
       try {
         // Notify the user that the server is spinning up
         showMessage('warn', 'Server Spinning Up', 'Please wait...');
-        const { result } = await supabase.from("Names").select();
-        if (result.length !== 0) {
-          setData(result);
-        }
+        const { data:result, error } = await supabase
+        .from("Names")
+        .select('name, drawn, pulledBy')
 
+        if (!ignore) {
+          if (error) {
+            console.warn(error)
+          } else if (result) {
+            setData(result)
+          }
+        }
         // Update the message once the server is up
         showMessage('success', 'Server is Up', 'Data loaded successfully.');
       } catch (error) {
@@ -43,13 +49,23 @@ function App() {
   }, []);
 
   const sendData = async (writtenData) => {
-    if (writtenData.length) {
+    if (writtenData) {
       try {
-        await Axios.post(server + "/writeData", { fileName, writtenData })
+        writtenData.map(async (data, idx) => {
+        const { error } = await supabase
+        .from("Names")
+        .update(data)
+        .eq('name', data.name)
+        console.log(data)
+        if (error) {
+          alert(error.message)
+        } else {          
+        }
+      })
       } catch (error) {
         console.log(error);
       };
-    };
+    };    
   };
 
   const showMessage = (severity, summary, detail) => {
@@ -88,10 +104,11 @@ function App() {
 
   const drawName = () => {
     const names = data.map((i) => {
-      if (nameEntered.toUpperCase() === i.name.toUpperCase()) {
+      if (nameEntered.toUpperCase() === i.name.toUpperCase()) {        
         return null;
       }
-      if (i.pickedBy !== "") {
+      if (i.pulledBy !== null) {
+        console.log(i)
         return null;
       }
       else {
@@ -109,10 +126,10 @@ function App() {
     } else {
       if (checkNames()) {
         if (checkDrawn()) {
-          const randomName = drawName();
+          const randomName = await drawName();          
           const arr = data;
           const index = arr.findIndex((obj) => obj.name === randomName.name);
-          arr[index].pickedBy = nameEntered;
+          arr[index].pulledBy = nameEntered;
 
           const index2 = arr.findIndex((obj) => obj.name.toUpperCase() === nameEntered.toUpperCase());
           arr[index2].drawn = true;
